@@ -1,0 +1,9 @@
+# Archivos del usuario — datos sensibles, NO subir a GitHub
+input-usuario/*
+!input-usuario/.gitkeep
+
+declaración-propuesta/*
+!declaración-propuesta/.gitkeep
+
+output/*
+!output/.gitkeep
