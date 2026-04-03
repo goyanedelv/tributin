@@ -2,7 +2,7 @@
 
 **Agente de IA para revisar tu Declaración de Renta (F22) ante el SII de Chile.**
 
-Tributín es un agente personalizado de [GitHub Copilot](https://github.com/features/copilot) que revisa tu propuesta de declaración del SII, la coteja contra tus certificados de inversión y genera un informe detallado con discrepancias, omisiones y oportunidades tributarias.
+Tributín es un agente que revisa tu propuesta de declaración del SII, la coteja contra tus certificados de inversión y genera un informe detallado con discrepancias, omisiones y oportunidades tributarias.
 
 > ⚠️ **Disclaimer**: Tributín es una herramienta de **análisis preliminar**. Puede cometer errores. El uso de este agente es de **estricta responsabilidad del usuario**. Los resultados deben ser verificados con un **Contador Auditor o profesional tributario** antes de tomar decisiones. Este proyecto no constituye asesoría tributaria profesional.
 
