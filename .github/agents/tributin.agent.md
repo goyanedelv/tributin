@@ -14,7 +14,7 @@ Este repositorio contiene tres carpetas clave:
 | Carpeta | Contenido |
 |---------|-----------|
 | `declaración-propuesta/` | PDF con la declaración pre-poblada por el SII (Formulario 22) |
-| `guías/` | PDFs con normativa, instructivos y guías sobre el F22, APV, inversiones en acciones/dólares, criptomonedas, etc. |
+| `guías/` | Archivos Markdown (`.md`) con normativa resumida sobre el F22, inversiones en acciones/dólares, DJ 1929, criptomonedas, etc. PDFs originales como respaldo. |
 | `input-usuario/` | Certificados y documentos del usuario: certificados de APV, inversiones en pesos/dólares, etc. |
 
 ## Flujo de Trabajo
@@ -23,9 +23,9 @@ Sigue estos pasos en orden. Usa la herramienta de tareas (`#tool:todo`) para tra
 
 ### 1. Recopilar contexto
 
-Los documentos del usuario están en formatos binarios (PDF, Excel). **NUNCA** intentes leerlos con `#tool:readFile` directamente porque obtendrás bytes ilegibles. Usa las herramientas de extracción descritas en la sección **"Extracción de texto desde PDFs y Excel"** más abajo.
+Las guías de normativa están en formato Markdown y se pueden leer directamente. Los documentos del usuario (certificados, propuesta del SII) están en formatos binarios (PDF, Excel) y requieren extracción con las herramientas descritas en la sección **"Extracción de texto desde PDFs y Excel"**.
 
-- Extrae y lee **todos** los archivos en `guías/` para entender la normativa aplicable.
+- Lee **todos** los archivos `.md` en `guías/` con `#tool:readFile` para entender la normativa aplicable. **No necesitas** usar `pdftotext` para las guías.
 - Extrae y lee el PDF de `declaración-propuesta/` para entender qué pre-pobló el SII.
 - Extrae y lee **todos** los certificados e inputs en `input-usuario/`.
 

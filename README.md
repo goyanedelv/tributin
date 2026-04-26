@@ -21,21 +21,21 @@ Tributín es un agente que revisa tu propuesta de declaración del SII, la cotej
 
 ## 🚀 Requisitos
 
-- [VS Code](https://code.visualstudio.com/) con [GitHub Copilot](https://github.com/features/copilot) habilitado
-- Copilot Chat con soporte para agentes personalizados (`.github/agents/`)
-- Sistema operativo con `pdftotext` disponible (viene con `poppler-utils`)
+- [VS Code](https://code.visualstudio.com/) con **Antigravity** o [GitHub Copilot](https://github.com/features/copilot) habilitado
 - Python 3 con `openpyxl` (para archivos Excel, ej. historial de Binance)
 
-### Instalación de dependencias
+### Dependencias opcionales
 
 ```bash
-# pdftotext (para extraer texto de PDFs)
-sudo apt-get install -y poppler-utils    # Debian/Ubuntu
-brew install poppler                      # macOS
-
 # openpyxl (para leer archivos Excel)
 pip install openpyxl
 ```
+
+> **Nota**: La extracción de PDFs se realiza con el servidor MCP `markitdown` (Antigravity) o con `pdftotext` (Copilot). Si usas Copilot, instala `poppler-utils`:
+> ```bash
+> sudo apt-get install -y poppler-utils    # Debian/Ubuntu
+> brew install poppler                      # macOS
+> ```
 
 ---
 
@@ -43,14 +43,24 @@ pip install openpyxl
 
 ```
 tributín/
-├── .github/agents/
-│   └── tributin.agent.md        # 🤖 El agente (instrucciones de Tributín)
+├── .agents/                     # 🤖 Agente Antigravity
+│   ├── tributin.md              #    Instrucciones del agente
+│   └── workflows/               #    Workflows disponibles
+│       ├── revisar-declaracion.md
+│       ├── verificar-apv.md
+│       └── analizar-cripto.md
+├── .github/agents/              # 🤖 Agente GitHub Copilot (compatibilidad)
+│   └── tributin.agent.md
 ├── declaración-propuesta/       # 📄 Tu propuesta del SII (PDF)
 │   └── .gitkeep
 ├── guías/                       # 📚 Guías y normativa tributaria
-│   ├── guia_renta.pdf
-│   ├── Guía completa sobre el Formulario 22...pdf
-│   └── ...más guías
+│   ├── guia-renta-sii.md
+│   ├── guia-f22-formulario.md
+│   ├── guia-acciones-dolares-f22.md
+│   ├── guia-planilla-acciones.md
+│   ├── guia-declaracion-1929.md
+│   ├── guia-cripto-faq.md
+│   └── originales/              # PDFs originales (respaldo)
 ├── input-usuario/               # 📑 Tus certificados e inputs
 │   └── .gitkeep
 ├── output/                      # 📊 Informes generados por Tributín
@@ -93,12 +103,18 @@ Aquí van **todos tus certificados y documentos de inversión**. Ejemplos:
 
 ### `guías/`
 
-Guías y normativa tributaria de referencia. **Ya vienen incluidas** en el repositorio. Contienen:
+Guías y normativa tributaria de referencia. **Ya vienen incluidas** en el repositorio en formato **Markdown resumido**, listas para que Tributín las lea directamente sin conversión. Contienen:
 
-- Guía oficial de Renta del SII
-- Instructivos del Formulario 22
-- Guías sobre cómo declarar APV, acciones, dólares y criptomonedas
-- Preguntas frecuentes sobre cripto
+| Archivo | Contenido |
+|---------|-----------|
+| `guia-renta-sii.md` | Guía oficial de Renta del SII: clasificación de rentas, quién declara, tabla IGC, beneficios tributarios |
+| `guia-f22-formulario.md` | Guía completa del Formulario 22: estructura, secciones, deducciones, errores comunes |
+| `guia-acciones-dolares-f22.md` | Cómo declarar acciones y dólares (Fintual) en el F22: mapeo de líneas/códigos |
+| `guia-planilla-acciones.md` | Estructura de la planilla de inversiones de Fintual (7 hojas) |
+| `guia-declaracion-1929.md` | Guía paso a paso para la Declaración Jurada 1929 |
+| `guia-cripto-faq.md` | Preguntas frecuentes del SII sobre criptomonedas e impuestos |
+
+Los PDFs originales de donde se generaron estos resúmenes están en la subcarpeta `guías/originales/` como respaldo.
 
 > Puedes agregar más guías si lo necesitas. Tributín las leerá automáticamente.
 
@@ -114,22 +130,44 @@ AAAAMMDD-HH:MM-informe-revisión-tributaria.md
 
 ## 💬 Cómo usar Tributín
 
-1. Clona este repositorio y abre la carpeta en VS Code
-2. Agrega tus archivos en `declaración-propuesta/` e `input-usuario/` (ver sección anterior)
+### Con Antigravity (recomendado)
+
+1. Clona este repositorio y abre la carpeta en VS Code con Antigravity
+2. Agrega tus archivos en `declaración-propuesta/` e `input-usuario/`
+3. Usa los workflows disponibles:
+
+```
+/revisar-declaracion    → Revisión completa del F22
+/verificar-apv          → Verificar APV en la propuesta
+/analizar-cripto        → Analizar historial de criptomonedas
+```
+
+O simplemente pide:
+
+```
+Revisa mi declaración de impuestos
+```
+
+4. Tributín analizará todos los documentos y generará un informe en `output/`
+
+### Con GitHub Copilot
+
+1. Abre la carpeta en VS Code con GitHub Copilot habilitado
+2. Agrega tus archivos en `declaración-propuesta/` e `input-usuario/`
 3. Abre Copilot Chat y escribe:
 
 ```
 @tributin Revisa mi declaración de impuestos
 ```
 
-4. Tributín analizará todos los documentos y generará un informe en `output/`
+4. Tributín analizará los documentos y generará el informe
 
 ### Otros prompts útiles
 
 ```
-@tributin Verifica si mis APV están bien integrados en la propuesta
-@tributin Revisa el archivo de criptomonedas y calcula las ganancias
-@tributin ¿Qué beneficios tributarios me estoy perdiendo?
+Verifica si mis APV están bien integrados en la propuesta
+Revisa el archivo de criptomonedas y calcula las ganancias
+¿Qué beneficios tributarios me estoy perdiendo?
 ```
 
 ---
@@ -141,6 +179,7 @@ Tus datos **nunca se suben a GitHub**. El `.gitignore` excluye automáticamente:
 - `input-usuario/*` — tus certificados y documentos personales
 - `declaración-propuesta/*` — tu propuesta del SII
 - `output/*` — los informes generados
+- `.gemini/` — datos locales de Antigravity
 
 Solo se versiona el agente, las guías públicas y este README.
 
@@ -151,7 +190,8 @@ Solo se versiona el agente, las guías públicas y este README.
 ¡Las contribuciones son bienvenidas! Algunas ideas:
 
 - **Nuevas guías**: Si encuentras documentación tributaria útil, agrégala a `guías/`
-- **Mejoras al agente**: El prompt de Tributín está en `.github/agents/tributin.agent.md` — puedes mejorar sus instrucciones, agregar soporte para más tipos de certificados o mejorar la lógica de cotejo
+- **Mejoras al agente**: Las instrucciones están en `.agents/tributin.md` (Antigravity) y `.github/agents/tributin.agent.md` (Copilot)
+- **Workflows**: Puedes agregar nuevos workflows en `.agents/workflows/`
 - **Soporte para más plataformas**: Agregar instrucciones para certificados de otras corredoras (Racional, BTG, LarrainVial, etc.)
 - **Más años tributarios**: Actualizar las guías cuando el SII publique nueva normativa
 - **Bugs y mejoras**: Si Tributín se equivoca en algo, abre un issue describiendo el caso

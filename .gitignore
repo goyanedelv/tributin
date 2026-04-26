@@ -7,3 +7,6 @@ declaración-propuesta/*
 
 output/*
 !output/.gitkeep
+
+# Antigravity — datos locales
+.gemini/
